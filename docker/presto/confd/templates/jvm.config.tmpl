@@ -1,0 +1,12 @@
+-server
+-Xmx{{getv "/java/maxheap/size"}}
+-XX:+UseConcMarkSweepGC
+-XX:+ExplicitGCInvokesConcurrent
+-XX:+CMSClassUnloadingEnabled
+-XX:+AggressiveOpts
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:OnOutOfMemoryError=kill -9 %p
+-XX:PermSize={{getv "/java/perm/size"}}
+-XX:MaxPermSize={{getv "/java/maxperm/size"}}
+-XX:ReservedCodeCacheSize={{getv "/java/rccs/size"}}
+-Xbootclasspath/p:{{getv "/presto/rootdir"}}/lib/floatingdecimal-0.1.jar

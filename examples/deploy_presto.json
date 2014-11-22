@@ -1,0 +1,102 @@
+{
+    "groups": [
+        {
+            "apps": [
+                {
+                    "args": [
+                        "discovery"
+                    ],
+                    "container": {
+                        "docker": {
+                            "image": "my.docker.registry:5000/sheepkiller/presto:latest"
+                        },
+                        "type": "DOCKER",
+                        "volumes": []
+                    },
+                    "cpus": "0.4",
+                    "env": {
+                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
+                        "MARATHON_APPNAME": "discovery",
+                        "MARATHON_APPGROUP": "presto",
+                        "MARATHON_URL": "http://my.marathon.master:8080"
+                    },
+                    "id": "/presto/meta/discovery",
+                    "instances": "1",
+                    "mem": "1024",
+                    "ports": [
+                        0
+                    ],
+                    "uris": [
+                        "http://my.marathon.master/.dockercfg"
+                    ]
+                },
+                {
+                    "args": [
+                        "coordinator"
+                    ],
+                    "container": {
+                        "docker": {
+                            "image": "my.docker.registry:5000/sheepkiller/presto:latest"
+                        },
+                        "type": "DOCKER",
+                        "volumes": []
+                    },
+                    "cpus": "0.4",
+                    "env": {
+                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
+                        "MARATHON_APPNAME": "coordinator",
+                        "MARATHON_APPGROUP": "presto",
+                        "MARATHON_URL": "http://my.marathon.master:8080"
+                    },
+                    "id": "/presto/meta/coordinator",
+                    "instances": "1",
+                    "mem": "1024",
+                    "ports": [
+                        0
+                    ],
+                    "uris": [
+                        "http://my.marathon.master/.dockercfg"
+                    ]
+                }
+            ],
+            "id": "/presto/meta"
+        },
+        {
+            "apps": [
+                {
+                    "args": [
+                        "worker"
+                    ],
+                    "container": {
+                        "docker": {
+                            "image": "my.docker.registry:5000/sheepkiller/presto:latest"
+                        },
+                        "type": "DOCKER",
+                        "volumes": []
+                    },
+                    "cpus": "2",
+                    "env": {
+                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
+                        "MARATHON_APPNAME": "worker",
+                        "MARATHON_APPGROUP": "presto",
+                        "MARATHON_URL": "http://my.marathon.master:8080"
+                    },
+                    "id": "/presto/workers/worker",
+                    "instances": "1",
+                    "mem": "2048",
+                    "ports": [
+                        0
+                    ],
+                    "uris": [
+                        "http://my.marathon.master/.dockercfg"
+                    ]
+                }
+            ],
+            "dependencies": [
+                "/presto/meta"
+            ],
+            "id": "/presto/workers"
+        }
+    ],
+    "id": "/presto"
+}

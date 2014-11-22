@@ -1,0 +1,8 @@
+[template]
+src = "discovery.properties.tmpl"
+dest = "/var/presto/installation/etc/discovery.properties"
+
+keys = [
+  "/presto/http/port",
+  "/presto/discovery/uri"
+]

@@ -1,0 +1,11 @@
+[template]
+src = "jvm.config.tmpl"
+dest = "/var/presto/installation/etc/jvm.config"
+
+keys = [ 
+   "/java/maxheap/size",
+   "/java/perm/size",
+   "/java/maxperm/size",
+   "/java/rccs/size",
+   "/presto/rootdir"
+]

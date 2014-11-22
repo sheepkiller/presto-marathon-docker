@@ -1,0 +1,9 @@
+[template]
+src = "worker.properties.tmpl"
+dest = "/var/presto/installation/etc/worker.properties"
+
+keys = [
+  "/presto/http/port",
+  "/presto/task/maxmemory",
+  "/presto/discovery/uri/"
+]
