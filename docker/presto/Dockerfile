@@ -1,6 +1,6 @@
 FROM centos:centos6
 
-MAINTAINER Clement Laforet <claforet@mediametrie.fr>
+MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
 
 RUN yum install -y wget unzip tar
 
@@ -23,7 +23,7 @@ RUN mkdir -p /usr/local/bin/ && \
     wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
     chmod +x /usr/local/bin/confd 
 
-ENV PRESTO_VERSION 0.85
+ENV PRESTO_VERSION 0.86
 RUN cd /presto && \
     wget http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
     tar zxvf presto-server-${PRESTO_VERSION}.tar.gz && \
