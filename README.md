@@ -3,7 +3,7 @@
 ## Requirements
 (working)
 - mesos cluster
-- marathon >= 0.75 (tested with marathon 0.75, should work with >= 0.70)
+- marathon >= 0.7.5 (tested with marathon 0.7.5, should work with >= 0.70)
 - some data accessible by presto
 - a web/FTP server (anything accessible via curl)
 - a private docker registry
@@ -41,9 +41,11 @@ You can also set JVM options via environment variables
 - JAVA_MAXPERM_SIZE
 - JAVA_RCCS_SIZE
 - JAVA_MAXHEAP_SIZE
+
 Or some presto configuration
 - PRESTO_TASK_MAXMEMORY
-Or UUID 
+
+Or UUID (uuid is generated at runtime)
 - PRESTO_UUID
 
 If you need more tuning, modify confd files (presto-marathon-docker/docker/presto/confd)
@@ -81,7 +83,7 @@ $ ./presto  \
                 'Accept: text/plain' ${MARATHON_URL}/v2/tasks | \
                  egrep ^${MARATHON_APPGROUP}_meta_coordinator | \
                  awk 'NF == 3 {printf("http://%s"), $NF}')
-
+```
 ## Limitations
 - [docker] Wasn't tested with bridge network (should work)
 - multiple concurrent execution should work if you change group name (didn't test)
@@ -89,7 +91,7 @@ $ ./presto  \
 ## ToDo's
 - Better discovery "code"
 - Better catalog handling
-- Maybe split /${MARATHON_APPGROU}/meta in 2: discovery & coordinator
+- Maybe split /${MARATHON_APPGROU}/meta in 2: discovery & coordinator (or merge coordinator and discovery)
 - Allow integration with etcd/consul (supported by confd)
 - HA for marathon master
 - handler more presto configuration options
