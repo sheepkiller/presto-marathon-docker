@@ -13,7 +13,7 @@
 
 ## Howto
 ### Setup
-First, build your contrainer and push it o your private repository (sorry no public build for now).
+First, build your container and push it o your private repository (sorry no public build for now).
 ```sh
 git clone https://github.com/sheepkiller/presto-marathon-docker.git
 cd presto-marathon-docker/docker/presto
