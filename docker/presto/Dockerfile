@@ -17,13 +17,13 @@ ENV PRESTO_ROOTDIR ${PRESTO_BASE}/installation
 RUN mkdir -p ${PRESTO_BASE}/data ${PRESTO_BASE}/installation  ${PRESTO_BASE}/installation/etc/catalog /presto
 WORKDIR /var/presto/installation
 
-ENV CONFD_VERSION  0.6.3
+ENV CONFD_VERSION  0.7.1
 
 RUN mkdir -p /usr/local/bin/ && \
     wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
     chmod +x /usr/local/bin/confd 
 
-ENV PRESTO_VERSION 0.86
+ENV PRESTO_VERSION 0.95
 RUN cd /presto && \
     wget http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
     tar zxvf presto-server-${PRESTO_VERSION}.tar.gz && \

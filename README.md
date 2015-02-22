@@ -13,13 +13,8 @@
 
 ## Howto
 ### Setup
-First, build your container and push it o your private repository (sorry no public build for now).
 ```sh
-git clone https://github.com/sheepkiller/presto-marathon-docker.git
-cd presto-marathon-docker/docker/presto
-docker build -t sheepkiller/presto .
-[snip]
-docker tag <image id> my.docker.registry:5000/sheepkiller/presto:0.1  && docker push my.docker.registry:5000/sheepkiller/presto:0.1
+docker pull sheepkiller/presto-marathon
 ```
 Then, create a tarball containing your catalog properties files, located in a directory called "catalog", and put it in a place where curl can grab it. Here's an example for jmx
 ```sh
@@ -91,7 +86,7 @@ $ ./presto  \
 ## ToDo's
 - Better discovery "code"
 - Better catalog handling
-- Maybe split /${MARATHON_APPGROU}/meta in 2: discovery & coordinator (or merge coordinator and discovery)
+- Maybe split /${MARATHON_APPGROUP}/meta in 2: discovery & coordinator (or merge coordinator and discovery)
 - Allow integration with etcd/consul (supported by confd)
 - HA for marathon master
 - handler more presto configuration options
