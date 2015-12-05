@@ -1,6 +1,6 @@
 [template]
 src = "coordinator.properties.tmpl"
-dest = "/var/presto/installation/etc/coordinator.properties"
+dest = "/var/presto/data/etc/coordinator.properties"
 
 keys = [
   "/presto/http/port",

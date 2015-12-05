@@ -1,6 +1,6 @@
 [template]
 src = "worker.properties.tmpl"
-dest = "/var/presto/installation/etc/worker.properties"
+dest = "/var/presto/data/etc/worker.properties"
 
 keys = [
   "/presto/http/port",
