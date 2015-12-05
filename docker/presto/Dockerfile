@@ -39,4 +39,4 @@ ADD confd /etc/confd
 ADD entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN ln -s /bin/dbus-uuidgen /usr/bin/uuidgen
+RUN ln /bin/dbus-uuidgen /usr/bin/uuidgen

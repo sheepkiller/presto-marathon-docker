@@ -1,6 +1,6 @@
 [template]
 src = "jvm.config.tmpl"
-dest = "/var/presto/data/etc/jvm.config"
+dest = "/var/presto/installation/etc/jvm.config"
 
 keys = [ 
    "/java/maxheap/size",
