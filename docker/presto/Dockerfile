@@ -1,13 +1,15 @@
 FROM centos:centos6
 
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
+MAINTAINER Akshaya Shanbhogue <akshay.live@gmail.com>
 
 RUN yum install -y wget unzip tar
 
-ENV JAVA_UPDATE 72
-ENV JAVA_BUILD  14
-RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-7u${JAVA_UPDATE}-linux-x64.rpm" -O /opt/jdk-7u${JAVA_UPDATE}-linux-x64.rpm
-RUN yum localinstall -y /opt/jdk-7u${JAVA_UPDATE}-linux-x64.rpm
+ENV JAVA_UPDATE 65
+ENV JAVA_BUILD  17
+
+RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-8u${JAVA_UPDATE}-linux-x64.rpm" -O /opt/jdk-8u${JAVA_UPDATE}-linux-x64.rpm
+RUN yum localinstall -y /opt/jdk-8u${JAVA_UPDATE}-linux-x64.rpm
 RUN rm -f /opt/jdk-7u${JAVA_UPDATE}-linux-x64.rpm
 
 ENV PRESTO_BASE /var/presto
