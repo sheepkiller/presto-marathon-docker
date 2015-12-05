@@ -3,7 +3,7 @@ FROM centos:centos6
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
 MAINTAINER Akshaya Shanbhogue <akshay.live@gmail.com>
 
-RUN yum install -y wget unzip tar
+RUN yum install -y wget unzip tar dbus
 
 ENV JAVA_UPDATE 65
 ENV JAVA_BUILD  17
@@ -39,3 +39,4 @@ ADD confd /etc/confd
 ADD entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
+RUN ln -s /bin/dbus-uuidgen /usr/bin/uuidgen
