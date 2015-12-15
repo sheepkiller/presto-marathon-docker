@@ -1,9 +1,9 @@
-FROM centos:centos6
+FROM centos:centos7
 
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
 MAINTAINER Akshaya Shanbhogue <akshay.live@gmail.com>
 
-RUN yum install -y wget unzip tar dbus
+RUN yum install -y wget unzip tar
 
 ENV JAVA_UPDATE 65
 ENV JAVA_BUILD  17
@@ -25,7 +25,7 @@ RUN mkdir -p /usr/local/bin/ && \
     wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
     chmod +x /usr/local/bin/confd 
 
-ENV PRESTO_VERSION 0.128
+ENV PRESTO_VERSION 0.129
 RUN cd /presto && \
     wget http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
     tar zxvf presto-server-${PRESTO_VERSION}.tar.gz && \
@@ -39,4 +39,5 @@ ADD confd /etc/confd
 ADD entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN ln /bin/dbus-uuidgen /usr/bin/uuidgen
+RUN systemctl disable firewalld
+
