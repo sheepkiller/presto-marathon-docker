@@ -69,8 +69,9 @@ $ docker exec -it <container id> /bin/bash
 sh connect.sh
 ```
 
+Has been tested on bridged networks.
+
 ## Limitations
-- [docker] Wasn't tested with bridge network (should work)
 - multiple concurrent execution should work if you change group name (didn't test)
 
 ## ToDo's
