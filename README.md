@@ -14,7 +14,7 @@
 ## Howto
 ### Setup
 ```sh
-docker pull akshaylive/presto-marathon
+docker pull sheepkiller/presto-marathon
 ```
 Then, create a tarball containing your catalog properties files, located in a directory called "catalog", and put it in a place where curl can grab it. Here's an example for jmx
 ```sh

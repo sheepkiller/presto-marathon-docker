@@ -1,7 +1,6 @@
 FROM centos:centos7
 
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
-MAINTAINER Akshaya Shanbhogue <akshay.live@gmail.com>
 
 RUN yum install -y wget unzip tar
 
