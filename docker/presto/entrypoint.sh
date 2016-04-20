@@ -27,15 +27,15 @@ export JAVA_RCCS_SIZE="${JAVA_RCCS_SIZE:-150M}"
 case "${PRESTO_SERVICE}" in
    "discovery")
        echo "Starting discovery server"
-        export JAVA_MAXHEAP_SIZE="${JAVA_HEAP_SIZE:-128M}"
-        export PRESTO_TASK_MAXMEMORY="${PRESTO_TASK_MAXMEMORY:-0}"
+        export JAVA_MAXHEAP_SIZE="${JAVA_HEAP_SIZE:-1G}"
+        export PRESTO_TASK_MAXMEMORY="${PRESTO_TASK_MAXMEMORY:-512M}"
         MARATHON_APPNAME="discovery"
         sleep 20;
        ;;
    "coordinator")
         echo "Starting coordinator"
-        export JAVA_MAXHEAP_SIZE="${JAVA_HEAP_SIZE:-1G}"
-        export PRESTO_TASK_MAXMEMORY="${PRESTO_TASK_MAXMEMORY:-0}"
+        export JAVA_MAXHEAP_SIZE="${JAVA_HEAP_SIZE:-2G}"
+        export PRESTO_TASK_MAXMEMORY="${PRESTO_TASK_MAXMEMORY:-1GB}"
         MARATHON_APPNAME="coordinator"
        ;;
 

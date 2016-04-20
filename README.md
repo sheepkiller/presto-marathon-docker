@@ -64,23 +64,14 @@ $ docker exec -it <container id> /bin/bash
                  egrep ^${MARATHON_APPGROUP}_meta_coordinator | \
                  awk 'NF == 3 {printf("http://%s"), $NF}')
 ```
-- from anywhere
+- from anywhere: configure and use 
 ```sh
-$ export PRESTO_VERSION=0.85
-$ export MARATHON_URL=http://my.marathon.master:8080
-$ export MARATHON_APPGROUP=presto
-$ wget http://central.maven.org/maven2/com/facebook/presto/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar
-$ mv presto-cli-${PRESTO_VERSION}-executable.jar presto
-$ chmod +x presto
-$ ./presto  \
-              --server \
-              $(curl -sSfLk -m 10 -H \
-                'Accept: text/plain' ${MARATHON_URL}/v2/tasks | \
-                 egrep ^${MARATHON_APPGROUP}_meta_coordinator | \
-                 awk 'NF == 3 {printf("http://%s"), $NF}')
+sh connect.sh
 ```
+
+Has been tested on bridged networks.
+
 ## Limitations
-- [docker] Wasn't tested with bridge network (should work)
 - multiple concurrent execution should work if you change group name (didn't test)
 
 ## ToDo's
