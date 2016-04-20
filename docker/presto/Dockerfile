@@ -1,42 +1,48 @@
-FROM centos:centos7
+FROM centos:7
 
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
 
-RUN yum install -y wget unzip tar
+RUN yum update -y && \
+    yum install -y git wget unzip tar && \
+    yum clean all
 
-ENV JAVA_UPDATE 65
-ENV JAVA_BUILD  17
 
-RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-8u${JAVA_UPDATE}-linux-x64.rpm" -O /opt/jdk-8u${JAVA_UPDATE}-linux-x64.rpm
-RUN yum localinstall -y /opt/jdk-8u${JAVA_UPDATE}-linux-x64.rpm
-RUN rm -f /opt/jdk-8u${JAVA_UPDATE}-linux-x64.rpm
+ENV JAVA_MAJOR=8 \
+    JAVA_UPDATE=92 \
+    JAVA_BUILD=14
 
-ENV PRESTO_BASE /var/presto
-ENV PRESTO_DATADIR ${PRESTO_BASE}/data
-ENV PRESTO_ROOTDIR ${PRESTO_BASE}/installation
+RUN wget -nv --no-cookies --no-check-certificate \
+    --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+    "http://download.oracle.com/otn-pub/java/jdk/${JAVA_MAJOR}u${JAVA_UPDATE}-b${JAVA_BUILD}/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm" -O /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm && \
+     yum localinstall -y /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm && \
+     rm -f /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm
 
-RUN mkdir -p ${PRESTO_BASE}/data ${PRESTO_BASE}/installation  ${PRESTO_BASE}/installation/etc/catalog /presto
+ENV JAVA_HOME=/usr/java/jre1.8.0_${JAVA_UPDATE} \
+    PRESTO_BASE=/var/presto \
+    PRESTO_DATADIR=${PRESTO_BASE}/data \
+    PRESTO_ROOTDIR=${PRESTO_BASE}/installation
+
+RUN mkdir -p ${PRESTO_BASE}/data ${PRESTO_BASE}/installation ${PRESTO_BASE}/installation/etc/catalog
 WORKDIR /var/presto/installation
 
-ENV CONFD_VERSION  0.7.1
+ENV CONFD_VERSION  0.11.0
 
 RUN mkdir -p /usr/local/bin/ && \
-    wget -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
-    chmod +x /usr/local/bin/confd 
+    wget -nv -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
+    chmod +x /usr/local/bin/confd
 
-ENV PRESTO_VERSION 0.129
-RUN cd /presto && \
-    wget http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
+ENV PRESTO_VERSION 0.144.1
+RUN mkdir /presto && \
+    cd /presto && \
+    wget -nv http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
     tar zxvf presto-server-${PRESTO_VERSION}.tar.gz && \
     mv -v /presto/presto-server-${PRESTO_VERSION}/* ${PRESTO_BASE}/installation && \
-     cd ${PRESTO_BASE}/installation/bin && \
-    wget http://central.maven.org/maven2/com/facebook/presto/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar && \
-    mv presto-cli-${PRESTO_VERSION}-executable.jar presto && chmod +x presto
+    cd ${PRESTO_BASE}/installation/bin && \
+    wget -nv -O presto http://central.maven.org/maven2/com/facebook/presto/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar && \
+    chmod +x presto && \
+    rm -fr /presto
 
 
 ADD confd /etc/confd
 ADD entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
-
-RUN systemctl disable firewalld
-
