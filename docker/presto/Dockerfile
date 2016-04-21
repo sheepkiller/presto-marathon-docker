@@ -3,11 +3,11 @@ FROM centos:7
 MAINTAINER Clement Laforet <sheepkiller@cultdeadshee.org>
 
 RUN yum update -y && \
-    yum install -y git wget unzip tar && \
+    yum install -y wget tar bc && \
     yum clean all
 
-
-ENV JAVA_MAJOR=8 \
+ENV PRESTO_BASE=/var/presto \
+    JAVA_MAJOR=8 \
     JAVA_UPDATE=92 \
     JAVA_BUILD=14
 
@@ -18,7 +18,6 @@ RUN wget -nv --no-cookies --no-check-certificate \
      rm -f /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm
 
 ENV JAVA_HOME=/usr/java/jre1.8.0_${JAVA_UPDATE} \
-    PRESTO_BASE=/var/presto \
     PRESTO_DATADIR=${PRESTO_BASE}/data \
     PRESTO_ROOTDIR=${PRESTO_BASE}/installation
 
@@ -35,7 +34,7 @@ ENV PRESTO_VERSION 0.144.2
 RUN mkdir /presto && \
     cd /presto && \
     wget -nv http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
-    tar zxvf presto-server-${PRESTO_VERSION}.tar.gz && \
+    tar zxf presto-server-${PRESTO_VERSION}.tar.gz && \
     mv -v /presto/presto-server-${PRESTO_VERSION}/* ${PRESTO_BASE}/installation && \
     cd ${PRESTO_BASE}/installation/bin && \
     wget -nv -O presto http://central.maven.org/maven2/com/facebook/presto/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar && \
