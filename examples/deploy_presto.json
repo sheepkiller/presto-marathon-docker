@@ -8,27 +8,39 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:latest"
+                            "image": "sheepkiller/presto-marathon:unstable"
                         },
                         "type": "DOCKER",
                         "volumes": []
                     },
                     "cpus": 0.4,
                     "env": {
-                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
-                        "MARATHON_APPNAME": "discovery",
-                        "MARATHON_APPGROUP": "presto",
-                        "MARATHON_URL": "http://my.marathon.master:8080"
+                        "CATALOGS_URL": "http://my.repo/catalog.tar.gz",
+                        "MARATHON_URL": "http://marathon.mesos:8080"
                     },
                     "id": "/presto/meta/discovery",
                     "instances": 1,
-                    "mem": 1024,
-                    "ports": [
-                        0
+                    "mem": 4096,
+                    "portDefinitions": [
+                      {
+                        "port": 0,
+                        "protocol": "tcp",
+                        "name": "api",
+                        "labels": {}
+                      }
                     ],
-                    "uris": [
-                        "http://my.marathon.master/.dockercfg"
-                    ]
+                    "readinessChecks": [
+                      {
+                        "name": "discoveryIsActive",
+                        "protocol": "HTTP",
+                        "path": "/v1/info/state",
+                        "portName": "api",
+                        "interval": 10000,
+                        "timeout": 10000,
+                        "httpStatusCodesForReady": [200],
+                        "preserveLastResponse": true
+                      }
+                  ]
                 },
                 {
                     "args": [
@@ -36,27 +48,40 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:latest"
+                            "image": "sheepkiller/presto-marathon:unstable"
                         },
                         "type": "DOCKER",
                         "volumes": []
                     },
                     "cpus": 0.4,
                     "env": {
-                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
-                        "MARATHON_APPNAME": "coordinator",
-                        "MARATHON_APPGROUP": "presto",
-                        "MARATHON_URL": "http://my.marathon.master:8080"
+                        "CATALOGS_URL": "http://my.repo/catalog.tar.gz",
+                        "MARATHON_URL": "http://marathon.mesos:8080"
                     },
                     "id": "/presto/meta/coordinator",
+                    "dependencies": ["/presto/meta/discovery"],
                     "instances": 1,
-                    "mem": 1024,
-                    "ports": [
-                        0
+                    "mem": 4096,
+                    "portDefinitions": [
+                      {
+                        "port": 0,
+                        "protocol": "tcp",
+                        "name": "api",
+                        "labels": {}
+                      }
                     ],
-                    "uris": [
-                        "http://my.marathon.master/.dockercfg"
-                    ]
+                    "readinessChecks": [
+                      {
+                        "name": "discoveryIsActive",
+                        "protocol": "HTTP",
+                        "path": "/v1/info/state",
+                        "portName": "api",
+                        "interval": 10000,
+                        "timeout": 10000,
+                        "httpStatusCodesForReady": [200],
+                        "preserveLastResponse": true
+                      }
+                  ]
                 }
             ],
             "id": "/presto/meta"
@@ -69,27 +94,40 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:latest"
+                            "image": "sheepkiller/presto-marathon:unstable"
                         },
                         "type": "DOCKER",
                         "volumes": []
                     },
                     "cpus": 2,
                     "env": {
-                        "CATALOGS_URL": "http://my.local.machine/catalog.tar.gz",
-                        "MARATHON_APPNAME": "worker",
-                        "MARATHON_APPGROUP": "presto",
-                        "MARATHON_URL": "http://my.marathon.master:8080"
+                        "CATALOGS_URL": "http://my.repo/catalog.tar.gz",
+                        "MARATHON_URL": "http://marathon.mesos:8080"
                     },
                     "id": "/presto/workers/worker",
+                    "dependencies": ["/presto/meta/coordinator"],
                     "instances": 1,
-                    "mem": 2048,
-                    "ports": [
-                        0
+                    "mem": 6144,
+                    "portDefinitions": [
+                      {
+                        "port": 0,
+                        "protocol": "tcp",
+                        "name": "api",
+                        "labels": {}
+                      }
                     ],
-                    "uris": [
-                        "http://my.marathon.master/.dockercfg"
-                    ]
+                    "readinessChecks": [
+                      {
+                        "name": "discoveryIsActive",
+                        "protocol": "HTTP",
+                        "path": "/v1/info/state",
+                        "portName": "api",
+                        "interval": 10000,
+                        "timeout": 10000,
+                        "httpStatusCodesForReady": [200],
+                        "preserveLastResponse": true
+                      }
+                  ]
                 }
             ],
             "dependencies": [
