@@ -30,7 +30,7 @@ RUN mkdir -p /usr/local/bin/ && \
     wget -nv -O /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 &&\
     chmod +x /usr/local/bin/confd
 
-ENV PRESTO_VERSION 0.144.2
+ENV PRESTO_VERSION 0.145
 RUN mkdir /presto && \
     cd /presto && \
     wget -nv http://central.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
