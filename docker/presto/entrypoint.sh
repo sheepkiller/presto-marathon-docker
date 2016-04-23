@@ -51,8 +51,6 @@ case "${PRESTO_SERVICE}" in
        ;;
 esac
 
-set
-
 if [ "${PRESTO_SERVICE}" = "discovery" ]
 then
 export PRESTO_DISCOVERY_URI=http://${HOST}:${PRESTO_HTTP_PORT}
