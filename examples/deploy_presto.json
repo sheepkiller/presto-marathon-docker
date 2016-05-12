@@ -8,7 +8,7 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:unstable"
+                            "image": "sheepkiller/presto-marathon:latest"
                         },
                         "type": "DOCKER",
                         "volumes": []
@@ -48,7 +48,7 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:unstable"
+                            "image": "sheepkiller/presto-marathon:latest"
                         },
                         "type": "DOCKER",
                         "volumes": []
@@ -94,7 +94,7 @@
                     ],
                     "container": {
                         "docker": {
-                            "image": "sheepkiller/presto-marathon:unstable"
+                            "image": "sheepkiller/presto-marathon:latest"
                         },
                         "type": "DOCKER",
                         "volumes": []
