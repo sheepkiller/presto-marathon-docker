@@ -7,15 +7,14 @@ RUN yum update -y && \
     yum clean all
 
 ENV PRESTO_BASE=/var/presto \
-    JAVA_MAJOR=8 \
-    JAVA_UPDATE=102 \
-    JAVA_BUILD=14
+    JDK_DOWNLOAD_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.rpm
 
 RUN wget -nv --no-cookies --no-check-certificate \
     --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-    "http://download.oracle.com/otn-pub/java/jdk/${JAVA_MAJOR}u${JAVA_UPDATE}-b${JAVA_BUILD}/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm" -O /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm && \
-     yum localinstall -y /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm && \
-     rm -f /tmp/jre-${JAVA_MAJOR}u${JAVA_UPDATE}-linux-x64.rpm
+    ${JDK_DOWNLOAD_URL} -O /tmp/jre-linux-x64.rpm && \
+    yum localinstall -y /tmp/jre-linux-x64.rpm && \
+    rm -f /tmp/jre-linux-x64.rpm
+
 
 ENV JAVA_HOME=/usr/java/jre1.8.0_${JAVA_UPDATE} \
     PRESTO_DATADIR=${PRESTO_BASE}/data \
